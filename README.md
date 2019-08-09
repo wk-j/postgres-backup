@@ -9,7 +9,7 @@ docker compose up
 open http://localhost:8080/jw
 ```
 
-*Backup*
+*Backup / restore*
 
 ```bash
 rm *.sql
