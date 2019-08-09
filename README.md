@@ -14,9 +14,15 @@ open http://localhost:8080/jw
 
 ```bash
 rm *.sql
+rm *.tar.gz
+
 docker exec -t postgresbackup_postgres_1 pg_dumpall --help
 
-docker exec -t postgresbackup_postgres_1 pg_dumpall -c -U postgres -l jwdb > dump-(date +%d-%m-%Y"_"%H_%M_%S).sql
+docker exec -t postgresbackup_postgres_1 pg_dumpall \
+    -c \
+    -U postgres \
+    -l jwdb > dump-(date +%d-%m-%Y"_"%H_%M_%S).sql
+
 cat dump*.sql | docker exec -i postgresbackup_postgres_1 psql -U postgres
 ```
 
