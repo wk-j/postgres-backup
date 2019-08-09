@@ -11,6 +11,8 @@ tools
 publish
 logs
 
+/*.sql
+
 .paket
 .settings
 .classpath
