@@ -12,6 +12,7 @@ publish
 logs
 
 /*.sql
+/*.tar.gz
 
 .paket
 .settings
