@@ -1,0 +1,39 @@
+version: "3.1"
+
+services:
+
+  joget:
+    image: wearetherock/joget:latest
+
+    depends_on:
+      - postgres
+
+    ports:
+      - 8080:8080
+
+    volumes:
+      - ./z-tomcat/server.xml:/opt/joget/apache-tomcat-8.5.41/conf/server.xml
+
+      - ./z-joget/app_forms:/opt/joget/wflow/app_forms
+      - ./z-joget/app_plugins:/opt/joget/wflow/app_plugins
+      - ./z-joget/app_datasource.properties:/opt/joget/wflow/app_datasource.properties
+      - ./z-joget/app_datasource-postgresql.properties:/opt/joget/wflow/app_datasource-postgresql.properties
+      - ./z-joget/postgresql-42.2.1.jar:/opt/joget/apache-tomcat-8.5.41/lib/postgresql.jar
+      - ./logs/tomcat:/opt/joget/apache-tomcat-8.5.41/logs
+
+  postgres:
+    image: postgres:10.1
+
+    environment:
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+
+    command: postgres -c max_connections=300 -c log_min_messages=LOG
+
+    volumes:
+      - ./z-postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - v-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  v-postgres-data:
